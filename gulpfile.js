@@ -34,7 +34,7 @@ gulp.task('browserSync', function() {
 
 // STYLUS --------------------------------
 gulp.task('stylus', function () {
-    return gulp.src('./public/styl/*.styl') // берем все styl-файлы из папки styl 
+    return gulp.src('./public/styl/001general.styl') // берем general.styl, в который подключены все остальные styl-файлы
         //.pipe(sourcemaps.init()) 
         .pipe(stylus())                     // превращаем в css-файл
         .pipe(autoprefixer([
