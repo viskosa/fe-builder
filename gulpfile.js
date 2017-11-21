@@ -6,6 +6,8 @@
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     stylus = require('gulp-stylus'),
+    prettify = require('gulp-html-prettify'),
+    jade = require('gulp-jade'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     watch = require('gulp-watch'),
@@ -63,6 +65,18 @@ gulp.task('css', function() {
         .pipe(browserSync.reload({stream:true})); // и обновляем браузер
 });
 
+// JADE -------------------------------------
+gulp.task('jade', function() {
+    var YOUR_LOCALS = {};
+
+    return gulp.src('./public/template/*.jade')
+        .pipe(jade({
+            locals: YOUR_LOCALS
+        }))
+        .pipe(prettify({indent_char: ' ', indent_size: 3}))
+        .pipe(gulp.dest('./'))
+})
+
 // HTML -------------------------------------
 gulp.task('html', function(){
     gulp.src(paths.html)                      // берем файл index.html
@@ -107,6 +121,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.css, ['css']);
     gulp.watch(filesJS, ['js']);            // отслеживаем все js-файлы
     gulp.watch(paths.script, ['js-sync']);
+    gulp.watch("./public/template/*.jade", ['jade']);
     //gulp.watch('./public/js/*.js', ['js']); // можно и напрямую здесь указывать каждый js-файл
     gulp.watch(paths.html, ['html']);
 });
